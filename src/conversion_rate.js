@@ -14,8 +14,11 @@ Blinksale.ConversionRate.convertElement = function(element, from, to, amount) {
     var conversion = rate * amount;
     $(element).update(conversion);
   } else {
-    $(element).addClassName(from + "-" + to).update(amount);
-    Blinksale.ConversionRate.fetchRate(from, to);
+    var className = from + "-" + to;
+    $(element).addClassName(className).update(amount);
+    if ($$('td.' + className).size() > 1) {
+      Blinksale.ConversionRate.fetchRate(from, to);
+    }
   }
 };
 
@@ -56,7 +59,7 @@ Blinksale.ConversionRate.fetchRate = function(from, to) {
 Blinksale.ConversionRate.requestContent = function(url) {
   var script  = document.createElement('script');
   script.src  = url;
-  script.type = "text/javascript"
+  script.type = "text/javascript";
   document.getElementsByTagName('head')[0].appendChild(script);
 };
 
