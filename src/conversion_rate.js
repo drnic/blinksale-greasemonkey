@@ -13,6 +13,9 @@ Blinksale.ConversionRate.convertElement = function(element, from, to, amount) {
   if (rate) {
     var conversion = rate * amount;
     $(element).update(conversion);
+  } else {
+    $(element).addClassName(from + "-" + to).update(amount);
+    Blinksale.ConversionRate.fetchRate(from, to);
   }
 };
 
@@ -23,7 +26,7 @@ Blinksale.ConversionRate.getRate = function(from, to) {
   if (Blinksale.ConversionRate.rates[from]) {
     return Blinksale.ConversionRate.rates[from][to];
   } else {
-    return Blinksale.ConversionRate.fetchRate(from, to);
+    return null;
   }
 };
 
@@ -32,6 +35,12 @@ Blinksale.ConversionRate.setRate = function(from, to, amount) {
   Blinksale.ConversionRate.rates[from][to] = amount;
   Blinksale.ConversionRate.rates[to] = Blinksale.ConversionRate.rates[to] || {};
   Blinksale.ConversionRate.rates[to][from] = 1/amount;
+  var className = from + "-" + to;
+  $$("." + className).each(function(element) {
+    var element = $(element);
+    element.update(parseFloat(element.innerHTML) * amount);
+    element.removeClassName(className);
+  });
 };
 
 // http://pipes.yahoo.com/pipes/pipe.run?_id=PjPSgA322xGoVnhwJZhxuA&_render=json&fromCurrencyCode=USD&toCurrencyCode=AUD
@@ -45,7 +54,8 @@ Blinksale.ConversionRate.fetchRate = function(from, to) {
 };
 
 Blinksale.ConversionRate.requestContent = function(url) {
-  
+  var script = new Element('script', {src: url, type: 'text/javascript'});
+  $$('head').first().insert(script);
 };
 
 Blinksale.ConversionRate.callback = function(data) {
