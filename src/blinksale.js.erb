@@ -14,7 +14,7 @@ if (typeof unsafeWindow != 'undefined') {
 <%= include 'invoices.js' %>
 
 // Activate each feature
-new Blinksale.Invoices();
+new Blinksale.Invoices.run();
 
 Blinksale.Version = '<%= APP_VERSION %>';
 
