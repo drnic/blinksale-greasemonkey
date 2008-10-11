@@ -10,17 +10,26 @@ Blinksale.Invoices.run = function() {
     if (currentRow.previous() && 
         currentRow.previous().hasClassName('total')) return true; // this is blank row
         
-    var tag = currentRow.childElements().first().tagName;
+    var rowInvoiceTotal = currentRow.childElements().find(function(element) {
+      return (element.readAttribute("name") == 'invoice_total');
+    });
+    var tag = rowInvoiceTotal.nodeName;
+    if (tag == null || typeof tag == "undefined") {
+      console.log(rowInvoiceTotal);
+      return true;
+    }
     var field = new Element(tag, { "name": "converted_amount" });
     currentRow.insert(field);
     if (tag == "TH") {
       field.update("Converted Amount");
     } else {
       field.update('...');
+      var amount   = Blinksale.Invoices.getCleanAmount(rowInvoiceTotal);
       var currency = Blinksale.Invoices.getCurrencyForCurrentRow(currentRow);
       if (currency != null) {
         Blinksale.ConversionRate.convertElement(
-          field, 
+          field,
+          amount,
           currency, 
           Blinksale.targetCurrency());
       }
@@ -45,4 +54,7 @@ Blinksale.Invoices.getCurrencyForCurrentRow = function(currentRow) {
   return null;
 };
 
-// #select
+Blinksale.Invoices.getCleanAmount = function(element) {
+  var results = element.innerHTML.strip();
+  return results.match(/[\d\.\,]+/)[0].replace(",", "");
+};

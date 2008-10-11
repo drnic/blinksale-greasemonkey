@@ -240,8 +240,8 @@
 // Dependent methods requiring stubbing
 Blinksale.targetCurrency = function() { return 'AUD' };
 Blinksale.ConversionRate = {};
-Blinksale.ConversionRate.convertElement = function(element, from, to) {
-  element.update('1.5');
+Blinksale.ConversionRate.convertElement = function(element, amount, from, to) {
+  element.update(amount);
 };
 
 Blinksale.Invoices.run();
@@ -261,9 +261,7 @@ Blinksale.Invoices.run();
 
     
     "test that total rows have local currency field": function() { with(this) {
-      $$('tr td[name=converted_amount]').each(function(amount) {
-        assertEqual('1.5', amount.innerHTML);
-      });
+      assertEqual('3750.00', $$('tr td[name=converted_amount]').first().innerHTML);
     }},
 
       
