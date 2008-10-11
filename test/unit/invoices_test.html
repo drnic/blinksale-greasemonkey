@@ -256,12 +256,14 @@ Blinksale.Invoices.run();
     },
     
     "test that header rows have 'Converted Amount' column": function() { with(this) {
-      assertEqual(3, $$('tr th[name=converted_amount]').size());
+      assertEqual(3, $$('table.invoiceTable tr th').filter(function(element) {
+        return element.innerHTML == 'Converted Amount';
+      }).size());
     }},
 
     
     "test that total rows have local currency field": function() { with(this) {
-      assertEqual('3750.00', $$('tr td[name=converted_amount]').first().innerHTML);
+      assertEqual('3750.00', $$('table.invoiceTable tr')[1].getElementsBySelector('td').last().innerHTML);
     }},
 
       

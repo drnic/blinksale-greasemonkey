@@ -10,8 +10,7 @@ if (typeof unsafeWindow != 'undefined') {
   window.Element = window.Element || unsafeWindow['window'].Element;
 }
 
-<%= include 'ext/jester.js' %>
-<%= include 'invoices.js' %>
+<%= include 'conversion_rate.js', 'invoices.js' %>
 
 // Activate each feature
 new Blinksale.Invoices.run();

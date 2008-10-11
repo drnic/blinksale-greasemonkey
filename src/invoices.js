@@ -5,21 +5,21 @@
 var Blinksale = Blinksale || {};
 Blinksale.Invoices = {};
 Blinksale.Invoices.run = function() {
-  $$('tr').each(function(currentRow) {
+  $$('table.invoiceTable tr').each(function(currentRow) {
     var currentRow = $(currentRow);
     if (currentRow.previous() && 
         currentRow.previous().hasClassName('total')) return true; // this is blank row
-        
-    var rowInvoiceTotal = currentRow.childElements().find(function(element) {
+
+    var rowInvoiceTotal = currentRow.getElementsBySelector('td', 'th').find(function(element) {
       return (element.readAttribute("name") == 'invoice_total');
     });
-    var tag = rowInvoiceTotal.nodeName;
+    var tag = rowInvoiceTotal.nodeName || rowInvoiceTotal.tagName;
     if (tag == null || typeof tag == "undefined") {
       console.log(rowInvoiceTotal);
       return true;
     }
-    var field = new Element(tag, { "name": "converted_amount" });
-    currentRow.insert(field);
+    var field = document.createElement(tag);
+    currentRow.appendChild(field);
     if (tag == "TH") {
       field.update("Converted Amount");
     } else {
@@ -46,7 +46,7 @@ Blinksale.Invoices.getCurrencyForCurrentRow = function(currentRow) {
     var foundTotalRow = totalRow.hasClassName('total');
   }
   if (foundTotalRow) {
-    var invoiceTotal = totalRow.select('td[name="invoice_total"]').first();
+    var invoiceTotal = totalRow.getElementsBySelector('td[name="invoice_total"]').first();
     var total = invoiceTotal.innerHTML.strip();
     var sectionCurrency = total.substring(0,3);
     return sectionCurrency;
