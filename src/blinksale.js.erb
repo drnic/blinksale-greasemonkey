@@ -10,6 +10,11 @@ if (typeof unsafeWindow != 'undefined') {
   window.Element = window.Element || unsafeWindow['window'].Element;
 }
 
+var Blinksale = {};
+Blinksale.targetCurrency = function() {
+  return 'AUD';
+};
+
 <%= include 'conversion_rate.js', 'invoices.js' %>
 
 // Activate each feature

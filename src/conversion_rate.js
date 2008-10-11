@@ -54,8 +54,10 @@ Blinksale.ConversionRate.fetchRate = function(from, to) {
 };
 
 Blinksale.ConversionRate.requestContent = function(url) {
-  var script = new Element('script', {src: url, type: 'text/javascript'});
-  $$('head').first().insert(script);
+  var script  = document.createElement('script');
+  script.src  = url;
+  script.type = "text/javascript"
+  document.getElementsByTagName('head')[0].appendChild(script);
 };
 
 Blinksale.ConversionRate.callback = function(data) {
