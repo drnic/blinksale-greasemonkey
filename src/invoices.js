@@ -1,3 +1,7 @@
+// Dependent upon:
+// * Blinksale.ConversionRate.convertElement(domElement, 'USD', 'AUD')
+// * Blinksale.targetCurrency() -> 'AUD'
+
 var Blinksale = Blinksale || {};
 Blinksale.Invoices = {};
 Blinksale.Invoices.run = function() {
@@ -8,14 +12,14 @@ Blinksale.Invoices.run = function() {
         
     var tag = currentRow.childElements().first().tagName;
     var field = new Element(tag, { "name": "converted_amount" });
+    currentRow.insert(field);
     if (tag == "TH") {
       field.update("Converted Amount");
     } else {
       field.update('...');
       var currency = Blinksale.Invoices.getCurrencyForCurrentRow(currentRow);
-      console.log(currency);
+      Blinksale.ConversionRate.convertElement(field, currency, Blinksale.targetCurrency());
     }
-    currentRow.insert(field);
   });
 };
 

@@ -237,7 +237,14 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-  Blinksale.Invoices.run();
+// Dependent methods requiring stubbing
+Blinksale.targetCurrency = function() { return 'AUD' };
+Blinksale.ConversionRate = {};
+Blinksale.ConversionRate.convertElement = function(element, from, to) {
+  element.update('1.5');
+};
+
+Blinksale.Invoices.run();
 </script>
 <script type="text/javascript">
 // <![CDATA[
@@ -254,7 +261,9 @@
 
     
     "test that total rows have local currency field": function() { with(this) {
-      fail("Not implemented");
+      $$('tr td[name=converted_amount]').each(function(amount) {
+        assertEqual('1.5', amount.innerHTML);
+      });
     }},
 
       
