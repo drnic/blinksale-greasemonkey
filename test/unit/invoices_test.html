@@ -240,7 +240,7 @@
 // Dependent methods requiring stubbing
 Blinksale.targetCurrency = function() { return 'AUD' };
 Blinksale.ConversionRate = {};
-Blinksale.ConversionRate.convertElement = function(element, amount, from, to) {
+Blinksale.ConversionRate.convertElement = function(element, from, to, amount) {
   element.update(amount);
 };
 

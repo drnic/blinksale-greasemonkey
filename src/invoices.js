@@ -29,9 +29,9 @@ Blinksale.Invoices.run = function() {
       if (currency != null) {
         Blinksale.ConversionRate.convertElement(
           field,
-          amount,
           currency, 
-          Blinksale.targetCurrency());
+          Blinksale.targetCurrency(),
+          amount);
       }
     }
   });

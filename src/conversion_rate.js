@@ -7,8 +7,13 @@ Blinksale.ConversionRate = {};
 // is updated immediately. Otherwise, this method returns immediately, but
 // the element update will occur when the conversion rate data is available.
 // That is, this method is non-blocking.
-Blinksale.ConversionRate.convertElement = function(element, amount, from, to) {
+Blinksale.ConversionRate.convertElement = function(element, from, to, amount) {
+  var rate = Blinksale.ConversionRate.getRate(from, to);
   
+  if (rate) {
+    var conversion = rate * amount;
+    $(element).update(conversion);
+  }
 };
 
 // Cache of rates already fetched

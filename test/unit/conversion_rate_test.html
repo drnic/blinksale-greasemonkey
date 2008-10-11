@@ -55,6 +55,7 @@
     setup: function() {
       // rate does already exist in cache
       Blinksale.ConversionRate.setRate('USD', 'AUD', 2);
+      Blinksale.ConversionRate.convertElement('sample', 'USD', 'AUD', 2);
     },
     
     "test that rate can be retrieved": function() { with(this) {
@@ -64,6 +65,10 @@
     
     "test that alternate rate is also cached": function() { with(this) {
       assertEqual(0.5, Blinksale.ConversionRate.getRate('AUD', 'USD'));
+    }},
+
+    "test that element contains conversion": function() { with(this) {
+      assertEqual('4', $('sample').innerHTML);
     }},
 
     
