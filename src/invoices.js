@@ -18,7 +18,12 @@ Blinksale.Invoices.run = function() {
     } else {
       field.update('...');
       var currency = Blinksale.Invoices.getCurrencyForCurrentRow(currentRow);
-      Blinksale.ConversionRate.convertElement(field, currency, Blinksale.targetCurrency());
+      if (currency != null) {
+        Blinksale.ConversionRate.convertElement(
+          field, 
+          currency, 
+          Blinksale.targetCurrency());
+      }
     }
   });
 };
@@ -37,7 +42,7 @@ Blinksale.Invoices.getCurrencyForCurrentRow = function(currentRow) {
     var sectionCurrency = total.substring(0,3);
     return sectionCurrency;
   }
-  return "USD"; // TODO - some default if cannot determine currency
+  return null;
 };
 
 // #select
