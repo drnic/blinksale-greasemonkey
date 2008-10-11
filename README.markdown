@@ -24,9 +24,9 @@ To install to Safari:
 
     BROWSERS=safari rake install
 
-To install to a Fluid.app wrapper app for Highrise, say called 'Highrise':
+To install to a Fluid.app wrapper app for Blinksale, say called 'Blinksale':
 
-    BROWSERS=Highrise rake install
+    BROWSERS=Blinksale rake install
 
 ## Unit tests
 
@@ -40,7 +40,7 @@ Or specific browsers:
 
     BROWSERS=safari rake test_units
 
-Or load individual test HTML files into a browser, such as `test/unit/highrise_people_test.html` to run those tests.
+Or load individual test HTML files into a browser, such as `test/unit/blinksale_people_test.html` to run those tests.
 
 Or run `script/js_autotest`, modify javascript or HTML test files and the tests will be automatically launched in Safari ([more info](http://drnicwilliams.com/2008/01/04/autotesting-javascript-in-rails/))
 

@@ -11,10 +11,10 @@ if (typeof unsafeWindow != 'undefined') {
 }
 
 <%= include 'ext/jester.js' %>
-<%= include 'person_model.js', 'person_view.js' %>
+<%= include 'invoices.js' %>
 
 // Activate each feature
-new Highrise.PersonView();
+new Blinksale.Invoices();
 
-Highrise.Version = '<%= APP_VERSION %>';
+Blinksale.Version = '<%= APP_VERSION %>';
 
