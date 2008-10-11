@@ -8,8 +8,9 @@
   <script src="../../src/ext/prototype.js"></script>
   
   <script src="../../src/conversion_rate.js" type="text/javascript"></script>
+  <script src="../fixtures/conversion_rate.js"></script>
   
-  <link rel="stylesheet" href="../../src/ext/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="../../src/ext/main.css" type="text/css" />
   <link rel="stylesheet" href="../assets/unittest.css" type="text/css" />
 </head>
 <body>
@@ -33,27 +34,38 @@
 
 <script type="text/javascript">
 // <![CDATA[
+Blinksale.ConversionRate.requestContent = function(url) {
+  var fixtureData = Blinksale.ConversionRate.fixtureData();
+  fixtureData.value.items[0].title = "2";
+  Blinksale.ConversionRate.callback(fixtureData)
+};
 
   new Test.Unit.Runner({
-    // replace this with your real tests
     setup: function() {
-      // rate doesn't already exist in cache
+      // rate does already exist in cache
+      Blinksale.ConversionRate.rates = {};
+      Blinksale.ConversionRate.convertElement('sample', 'USD', 'AUD', 2);
     },
+
+    "test that rate can be retrieved": function() { with(this) {
+      assertEqual(2, Blinksale.ConversionRate.getRate('USD', 'AUD'));
+    }},
     
-    teardown: function() {
-      
-    },
+    "test that alternate rate is also cached": function() { with(this) {
+      assertEqual(0.5, Blinksale.ConversionRate.getRate('AUD', 'USD'));
+    }},
     
-    testTruth: function() { with(this) {
-      assert(true);
+    "test that element contains conversion": function() { with(this) {
+      assertEqual('4', $('sample').innerHTML);
     }}
-      
+
   }, {testLog: "testlog"}); 
 
   new Test.Unit.Runner({
     // replace this with your real tests
     setup: function() {
       // rate does already exist in cache
+      Blinksale.ConversionRate.rates = {};
       Blinksale.ConversionRate.setRate('USD', 'AUD', 2);
       Blinksale.ConversionRate.convertElement('sample', 'USD', 'AUD', 2);
     },
@@ -61,7 +73,6 @@
     "test that rate can be retrieved": function() { with(this) {
       assertEqual(2, Blinksale.ConversionRate.getRate('USD', 'AUD'));
     }},
-
     
     "test that alternate rate is also cached": function() { with(this) {
       assertEqual(0.5, Blinksale.ConversionRate.getRate('AUD', 'USD'));
@@ -69,7 +80,7 @@
 
     "test that element contains conversion": function() { with(this) {
       assertEqual('4', $('sample').innerHTML);
-    }},
+    }}
 
     
   }, {testLog: "testlog-cached"}); 
