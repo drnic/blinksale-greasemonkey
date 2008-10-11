@@ -1,0 +1,20 @@
+<%= include 'HEADER.js' %>
+
+// TODO: Safari/GreaseKit doesn't like this:
+// if (typeof GM_log != 'undefined') {
+//   window.console = console || {};
+//   window.console.log = console.log || GM_log;
+// }
+if (typeof unsafeWindow != 'undefined') {
+  window.$$      = window.$$ || unsafeWindow['window'].$$;
+  window.Element = window.Element || unsafeWindow['window'].Element;
+}
+
+<%= include 'ext/jester.js' %>
+<%= include 'person_model.js', 'person_view.js' %>
+
+// Activate each feature
+new Highrise.PersonView();
+
+Highrise.Version = '<%= APP_VERSION %>';
+
