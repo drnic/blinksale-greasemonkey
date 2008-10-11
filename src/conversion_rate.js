@@ -10,3 +10,21 @@ Blinksale.ConversionRate = {};
 Blinksale.ConversionRate.convertElement = function(element, amount, from, to) {
   
 };
+
+// Cache of rates already fetched
+Blinksale.ConversionRate.rates = {};
+
+Blinksale.ConversionRate.getRate = function(from, to) {
+  if (Blinksale.ConversionRate.rates[from]) {
+    return Blinksale.ConversionRate.rates[from][to];
+  } else {
+    return null;
+  }
+};
+
+Blinksale.ConversionRate.setRate = function(from, to, amount) {
+  Blinksale.ConversionRate.rates[from] = Blinksale.ConversionRate.rates[from] || {};
+  Blinksale.ConversionRate.rates[from][to] = amount;
+  Blinksale.ConversionRate.rates[to] = Blinksale.ConversionRate.rates[to] || {};
+  Blinksale.ConversionRate.rates[to][from] = 1/amount;
+};
